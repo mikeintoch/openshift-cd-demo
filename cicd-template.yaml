@@ -147,7 +147,7 @@ objects:
               }
               stage('Promote to STAGE?') {
                 agent {
-                  label 'skopeo'
+                  label 'jenkins-slave-mgmt'
                 }
                 steps {
                   timeout(time:15, unit:'MINUTES') {
@@ -226,15 +226,15 @@ objects:
         <annotations/>
         <imagePullSecrets/>
       </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
-    skopeo-template: |-
+    mgmt-template: |-
       <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
         <inheritFrom></inheritFrom>
-        <name>skopeo</name>
+        <name>jenkins-slave-mgmt</name>
         <privileged>false</privileged>
         <alwaysPullImage>false</alwaysPullImage>
         <instanceCap>2147483647</instanceCap>
         <idleMinutes>0</idleMinutes>
-        <label>skopeo</label>
+        <label>jenkins-slave-mgmt</label>
         <serviceAccount>jenkins</serviceAccount>
         <nodeSelector></nodeSelector>
         <customWorkspaceVolumeEnabled>false</customWorkspaceVolumeEnabled>
@@ -245,7 +245,7 @@ objects:
         <containers>
           <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
             <name>jnlp</name>
-            <image>docker.io/siamaksade/jenkins-slave-skopeo-centos7</image>
+            <image>docker.io/mikeintoch/jenkins-slave-mgmt</image>
             <privileged>false</privileged>
             <alwaysPullImage>false</alwaysPullImage>
             <workingDir>/tmp</workingDir>
